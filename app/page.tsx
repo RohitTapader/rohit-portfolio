@@ -3,6 +3,7 @@
 
 import React from "react";
 import ChatWidget from "@/components/ChatWidget";
+import { Analytics } from "@vercel/analytics/next"
 const NAV_LINKS = [
   { name: "Home", section: "home" },
   { name: "About", section: "about" },
