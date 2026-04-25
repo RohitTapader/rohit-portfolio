@@ -103,7 +103,7 @@ export default function HomePage() {
           <div className="flex-1">
             <h2 className="text-2xl font-semibold mb-3">About Me</h2>
             <p className="text-gray-700 dark:text-zinc-300 text-base md:text-lg mb-4">
-              Product Manager with 5+ of experience building and scaling B2B SaaS, platform, and automation products across Compliance, Finance and Manufacturing domains. Proven track record of delivering 0-&gt;1 products and driving adoption, improving efficiency through scalable systems and data-driven product design. Experienced in product discovery, roadmap execution, and cross-functional collaboration, with exposure to AI-assisted and rule-based systems.
+              Product Manager with 8+ of experience building and scaling B2B SaaS, platform, and automation products across Compliance, Finance and Manufacturing domains. Proven track record of delivering 0-&gt;1 products and driving adoption, improving efficiency through scalable systems and data-driven product design. Experienced in product discovery, roadmap execution, and cross-functional collaboration, with exposure to AI-assisted and rule-based systems.
             </p>
           </div>
         </section>
