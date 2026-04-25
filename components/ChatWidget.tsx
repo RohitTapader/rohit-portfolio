@@ -2,36 +2,52 @@
 
 import { useState, useRef, useEffect } from "react";
 
+type ChatMessage = {
+  role: "user" | "assistant";
+  content: string;
+};
+
 export default function ChatWidget() {
+  // UI state: whether chat panel is open.
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<any[]>([]);
+  // Conversation history shown in chat window.
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  // Current text inside the input field.
   const [input, setInput] = useState("");
+  // Loading indicator while waiting for API response.
   const [loading, setLoading] = useState(false);
+  // Invisible anchor used for auto-scroll to latest message.
   const bottomRef = useRef<HTMLDivElement>(null);
 
+  // Quick-start prompts shown before first message.
   const suggestedQuestions = [
     "What impact did Rohit create at ADP?",
     "Tell me about his AI experience",
     "What products has he built?",
   ];
 
+  // Keep latest messages visible by scrolling to bottom on updates.
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
+  // Sends user message to /api/chat and appends assistant response.
   const sendMessage = async (text?: string) => {
     const messageToSend = text || input;
     if (!messageToSend.trim()) return;
 
+    // Optimistically show user message in the UI.
     setMessages((prev) => [
       ...prev,
       { role: "user", content: messageToSend },
     ]);
 
+    // Clear input and show loading state while request is in-flight.
     setInput("");
     setLoading(true);
 
     try {
+      // This hits app/api/chat/route.ts on the same Next.js app.
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: {
@@ -42,11 +58,13 @@ export default function ChatWidget() {
 
       const data = await res.json();
 
+      // Append assistant reply from API route response.
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: data.reply },
       ]);
-    } catch (error) {
+    } catch {
+      // Graceful fallback when network/API fails.
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: "Something went wrong." },
@@ -57,8 +75,10 @@ export default function ChatWidget() {
   };
 
   return (
+    // Floating widget pinned to bottom-right on all screen sizes.
     <div className="fixed bottom-5 right-5 z-50">
       {open && (
+        // Expanded chat panel container.
         <div className="bg-white shadow-2xl rounded-2xl w-80 p-4 border flex flex-col">
           
           {/* Header */}
@@ -66,6 +86,7 @@ export default function ChatWidget() {
 
           {/* Chat Area */}
           <div className="h-64 overflow-y-auto text-sm space-y-2">
+            {/* Show suggested prompts before conversation starts. */}
             {messages.length === 0 && (
               <div className="text-gray-500 text-sm">
                 Try asking:
@@ -86,6 +107,7 @@ export default function ChatWidget() {
             {messages.map((m, i) => (
               <div
                 key={i}
+                // User messages align right, assistant aligns left.
                 className={`p-2 rounded-lg max-w-[80%] ${
                   m.role === "user"
                     ? "bg-black text-white ml-auto"
@@ -97,6 +119,7 @@ export default function ChatWidget() {
             ))}
 
             {loading && (
+              // Small state cue while model is generating.
               <div className="text-gray-400 text-sm">Thinking...</div>
             )}
 
@@ -113,6 +136,7 @@ export default function ChatWidget() {
             />
 
             <button
+              // Trigger send using current input content.
               onClick={() => sendMessage()}
               className="bg-black text-white px-3 rounded"
             >
@@ -124,6 +148,7 @@ export default function ChatWidget() {
 
       {/* Floating Button */}
       <button
+        // Toggle widget open/closed.
         onClick={() => setOpen(!open)}
         className="bg-black text-white px-4 py-2 rounded-full shadow-lg"
       >

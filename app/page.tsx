@@ -3,7 +3,9 @@
 
 import React from "react";
 import ChatWidget from "@/components/ChatWidget";
-import { Analytics } from "@vercel/analytics/next"
+
+// Navigation items map directly to section IDs on this same page.
+// Clicking a nav item scrolls to the matching section.
 const NAV_LINKS = [
   { name: "Home", section: "home" },
   { name: "About", section: "about" },
@@ -14,6 +16,7 @@ const NAV_LINKS = [
 ];
 
 function scrollToSection(section: string) {
+  // Find section by ID and smooth-scroll to it.
   const el = document.getElementById(section);
   if (el) {
     el.scrollIntoView({ behavior: "smooth" });
@@ -22,6 +25,7 @@ function scrollToSection(section: string) {
 
 export default function HomePage() {
   return (
+    // This entire page is a single long-scroll portfolio landing page.
     <div className="min-h-screen bg-white dark:bg-zinc-900 text-gray-900 dark:text-zinc-100 font-sans">
       {/* Header & Navigation */}
       <header className="fixed w-full top-0 bg-white/90 dark:bg-zinc-900/90 z-40 shadow-sm backdrop-blur border-b border-gray-100 dark:border-zinc-800">
@@ -57,6 +61,7 @@ export default function HomePage() {
         </nav>
       </header>
 
+      {/* Main portfolio content sections start here. */}
       <main className="pt-20 pb-12 max-w-6xl mx-auto px-4">
         {/* Hero Section */}
         <section
@@ -103,7 +108,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Experience Section */}
+        {/* Experience Section: each company is one article block. */}
         <section
           id="experience"
           className="py-12 border-b border-gray-200 dark:border-zinc-800"
@@ -122,7 +127,7 @@ export default function HomePage() {
               </p>
               <ul className="list-disc ml-6 space-y-2 text-sm md:text-base text-gray-700 dark:text-zinc-300">
                 <li>
-                  Built a scalable billing system integrating multiple data touchpoints, driving adoption to <strong>400 existing and new clients in 1.5 years</strong>, reducing manual billing effort by <strong>50%</strong> and preventing <strong>$250K annual credits</strong> caused by incorrect billing.
+                  Built a scalable billing system integrating multiple data touchpoints, driving adoption to <strong>700+ existing and new clients in 1.5 years</strong>, reducing manual billing effort by <strong>50%</strong> and preventing <strong>$450K annual credits</strong> caused by incorrect billing.
                 </li>
                 <li>
                   Redesigned tax filing workflows by automating manual service and operations touchpoints and introducing rule-based validation for jurisdiction-specific checks, improving efficiency by <strong>25%</strong>.
@@ -131,7 +136,7 @@ export default function HomePage() {
                   Launched a plug-and-play solution to standardize integration formats based on mid-market client feedback, reducing onboarding time by <strong>15%</strong> and improving integration adoption by <strong>20%</strong>.
                 </li>
                 <li>
-                  Led a POC for an agentic AI-driven service automation solution, automating <strong>~40% of Tier-1 support requests</strong> (for example, invoice and billing queries, account updates) via LLM plus API orchestration; demonstrated <strong>~$400K-$600K annual savings potential</strong> based on pilot volumes (<strong>~12,000 tickets</strong>).
+                  Led development for an agentic AI-driven service automation solution, automating <strong>~40% of Tier-1 support requests</strong> (for example, invoice and billing queries, account updates) via LLM plus API orchestration; demonstrated <strong>~$400K-$600K annual savings potential</strong> based on pilot volumes (<strong>~12,000 tickets</strong>).
                 </li>
               </ul>
             </article>
@@ -145,10 +150,10 @@ export default function HomePage() {
               </p>
               <ul className="list-disc ml-6 space-y-2 text-sm md:text-base text-gray-700 dark:text-zinc-300">
                 <li>
-                  Led a 0 to 1 launch of a product, enabling automation of core product workflows, achieving <strong>~30% pilot-to-paid conversion</strong> within 3 months and scaling from <strong>15 to 85 paying customers</strong> over 18 months.
+                  Led a 0 to 1 launch of a product, enabling automation of core product workflows, achieving <strong>~30% pilot-to-paid conversion</strong> within 3 months and scaling from <strong>15 to 80+ paying customers</strong> over 18 months.
                 </li>
                 <li>
-                  Built a rule-based and AI-assisted system for transaction matching across bank, AR, and GL data, improving auto-reconciliation rates to <strong>88%</strong> and reducing manual effort by <strong>65%</strong>.
+                  Built a rule-based and AI-assisted system for transaction matching across bank, AR, and GL data, improving auto-reconciliation rates to <strong>80%</strong> and reducing manual effort by <strong>60%</strong>.
                 </li>
                 <li>
                   Developed shared platform capabilities (ERP integrations, orchestration, reusable objects), reducing duplicate development effort by <strong>25%</strong> and improving delivery timelines by <strong>20%</strong>.
@@ -207,7 +212,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Skills Section */}
+        {/* Skills Section: grouped chips for fast recruiter scan. */}
         <section
           id="skills"
           className="py-12 border-b border-gray-200 dark:border-zinc-800"
@@ -273,7 +278,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Projects Section */}
+        {/* Projects Section: currently keeping one highlighted project. */}
         <section
           id="projects"
           className="py-12 border-b border-gray-200 dark:border-zinc-800"
@@ -303,7 +308,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Contact Section */}
+        {/* Contact Section: quick links for recruiter outreach. */}
         <section
           id="contact"
           className="py-14 text-center flex flex-col items-center"
@@ -343,6 +348,7 @@ export default function HomePage() {
             </a>
           </div>
         </section>
+        {/* ChatWidget is rendered here; it calls /api/chat in route.ts. */}
         <ChatWidget />
       </main>
 

@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 
+// Keep messages short to control API cost and abuse.
 const MAX_INPUT_LENGTH = 300;
 
-// Basic keyword filter (can expand later)
+// Basic keyword filter (can expand later).
 const blockedKeywords = [
   "hate",
   "kill",
@@ -15,44 +16,47 @@ const blockedKeywords = [
   "abuse",
 ];
 
-// Check for unsafe input
+// Returns true when user text includes blocked/sensitive words.
 function isUnsafeInput(input: string) {
   const lower = input.toLowerCase();
   return blockedKeywords.some((word) => lower.includes(word));
 }
 
-// Check if query is relevant to Rohit
+// Restrict questions to the portfolio topic.
 function isRelevant(input: string) {
   const keywords = ["rohit", "experience", "adp", "highradius", "mindtree", "skills", "product"];
   const lower = input.toLowerCase();
   return keywords.some((word) => lower.includes(word));
 }
 
+// Handles POST /api/chat from ChatWidget.tsx.
 export async function POST(req: Request) {
   try {
+    // Read user message from the request body.
     const { message } = await req.json();
 
-    // 1️⃣ Input length control (cost control)
+    // 1) Input length control (cost + stability).
     if (!message || message.length > MAX_INPUT_LENGTH) {
       return NextResponse.json({
         reply: "Please keep your question short and relevant.",
       });
     }
 
-    // 2️⃣ Block unsafe content
+    // 2) Block unsafe/sensitive requests.
     if (isUnsafeInput(message)) {
       return NextResponse.json({
         reply: "Sorry, I cannot process inappropriate or sensitive requests.",
       });
     }
 
-    // 3️⃣ Relevance check
+    // 3) Reject off-topic questions.
     if (!isRelevant(message)) {
       return NextResponse.json({
         reply: "I can only answer questions related to Rohit's experience, skills, and work.",
       });
     }
 
+    // Server-side call to OpenAI; API key stays hidden in .env.local.
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -62,7 +66,7 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         model: "gpt-4o-mini",
 
-        // 💰 COST CONTROL
+        // Cost-control settings: short and focused answers.
         max_tokens: 120,
         temperature: 0.3,
 
@@ -89,8 +93,8 @@ Rohit Tapader is a Product Manager with 5+ years experience in B2B SaaS, automat
 
 ADP:
 - Built a scalable billing system integrating multiple data touchpoints, driving adoption to
-400 existing & new clients in 1.5 years reducing manual billing effort by 50% and preventing
-$250K annual credits caused by incorrect billing.
+700+ existing & new clients in 1.5 years reducing manual billing effort by 50% and preventing
+$450K annual credits caused by incorrect billing.
 
 - Redesigned Tax Filing workflows by automating manual Service & Operations touchpoints
 & introducing rule-based validation for jurisdiction-specific checks, improving efficiency by
@@ -106,7 +110,7 @@ $250K annual credits caused by incorrect billing.
 HighRadius:
 - Led 0→1 launch of a product, enabling automation of core product workflows, achieving ~30% pilot-to-paid conversion within 3 months and scaling from 15 to 85 paying customers over 18 months.
 - Built a rule-based and AI-assisted system for transaction matching across bank, AR, and GL data, improving auto-reconciliation rates to
-88% and reducing manual effort by 65%
+80% and reducing manual effort by 60%
 
 - Developed shared platform capabilities (ERP integrations, orchestration, reusable objects), reducing duplicate development effort by 25% and improving delivery timelines by 20%
 - Increased feature adoption by 20% by aligning Sales and Customer Success on use-case qualification, onboarding journeys, and targeted engagement to drive consistent feature usage.
@@ -141,14 +145,16 @@ Only use the above information.`,
     const data = await response.json();
     let reply = data.choices?.[0]?.message?.content || "Sorry, something went wrong.";
 
-    // 4️⃣ Output safety filter
+    // 4) Safety check on model output before returning to UI.
     if (isUnsafeInput(reply)) {
       reply = "I'm unable to respond to that request.";
     }
 
+    // ChatWidget consumes { reply } and renders it in chat bubbles.
     return NextResponse.json({ reply });
 
   } catch (error) {
+    // Generic fallback so UI always gets a response shape.
     console.error("Error:", error);
 
     return NextResponse.json({
