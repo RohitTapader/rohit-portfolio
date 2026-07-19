@@ -70,10 +70,10 @@ export default function HomePage() {
         >
           <div className="flex-1 text-center md:text-left">
             <h1 className="text-3xl md:text-5xl font-extrabold leading-tight mb-5">
-              Senior Product Manager | B2B SaaS, Platform Solutions &amp; AI-Driven Workflows
+              Product Manager | Enterprise SaaS | Platform, Automation &amp; AI-driven Products
             </h1>
             <p className="text-lg md:text-xl mb-7 text-gray-600 dark:text-zinc-300 max-w-xl">
-              I build and scale AI-enabled B2B SaaS products that turn complex workflows into intuitive, high-impact user experiences.
+              I build and scale B2B enterprise SaaS and platform products that turn complex workflows into intuitive, high-impact user experiences.
             </p>
             <a
               href="#contact"
@@ -103,7 +103,7 @@ export default function HomePage() {
           <div className="flex-1">
             <h2 className="text-2xl font-semibold mb-3">About Me</h2>
             <p className="text-gray-700 dark:text-zinc-300 text-base md:text-lg mb-4">
-              Product Manager with 8+ of experience building and scaling B2B SaaS, platform, and automation products across Compliance, Finance and Manufacturing domains. Proven track record of delivering 0-&gt;1 products and driving adoption, improving efficiency through scalable systems and data-driven product design. Experienced in product discovery, roadmap execution, and cross-functional collaboration, with exposure to AI-assisted and rule-based systems.
+              Product Manager with 8.5+ years of experience building and scaling B2B enterprise SaaS and platform products in HCM, FinTech, and Manufacturing domains. Proven track record of delivering 0&rarr;1 products and driving adoption, improving efficiency through scalable systems and data-driven product design. Experienced in product discovery, prioritizing roadmaps based on customer insights, and cross-functional collaboration, with exposure to AI-assisted and rule-based systems.
             </p>
           </div>
         </section>
@@ -127,16 +127,16 @@ export default function HomePage() {
               </p>
               <ul className="list-disc ml-6 space-y-2 text-sm md:text-base text-gray-700 dark:text-zinc-300">
                 <li>
-                  Built a scalable billing system integrating multiple data touchpoints, driving adoption to <strong>700+ existing and new clients in 1.5 years</strong>, reducing manual billing effort by <strong>50%</strong> and preventing <strong>$450K annual credits</strong> caused by incorrect billing.
+                  Spearheaded development of a scalable, multi-source billing system, onboarding <strong>700+ clients within 18 months</strong>, reducing manual billing effort by <strong>50%</strong> and eliminating <strong>$450K in annual revenue leakage</strong>.
                 </li>
                 <li>
-                  Redesigned tax filing workflows by automating manual service and operations touchpoints and introducing rule-based validation for jurisdiction-specific checks, improving efficiency by <strong>25%</strong>.
+                  Led cross-functional discovery and workflow redesign by partnering with Engineering, UX, and Operations teams to automate manual touchpoints in Tax filing workflows, improving operational efficiency by <strong>25%</strong>.
                 </li>
                 <li>
-                  Launched a plug-and-play solution to standardize integration formats based on mid-market client feedback, reducing onboarding time by <strong>15%</strong> and improving integration adoption by <strong>20%</strong>.
+                  Built a standardized plug-and-play ERP integration framework for mid-market ERP clients, reducing integration setup time by <strong>30%</strong> across multiple ERP systems.
                 </li>
                 <li>
-                  Led development for an agentic AI-driven service automation solution, automating <strong>~40% of Tier-1 support requests</strong> (for example, invoice and billing queries, account updates) via LLM plus API orchestration; demonstrated <strong>~$400K-$600K annual savings potential</strong> based on pilot volumes (<strong>~12,000 tickets</strong>).
+                  Defined MVP and rollout strategy for an Agentic AI-driven service automation solution, automating <strong>40% of Tier-1 support requests</strong> and demonstrating <strong>~$400K&ndash;$600K annual savings potential</strong> based on pilot volumes (<strong>~12,000 tickets</strong>).
                 </li>
               </ul>
             </article>
@@ -150,16 +150,19 @@ export default function HomePage() {
               </p>
               <ul className="list-disc ml-6 space-y-2 text-sm md:text-base text-gray-700 dark:text-zinc-300">
                 <li>
-                  Led a 0 to 1 launch of a product, enabling automation of core product workflows, achieving <strong>~30% pilot-to-paid conversion</strong> within 3 months and scaling from <strong>15 to 80+ paying customers</strong> over 18 months.
+                  Led 0&rarr;1 product launch of <strong>LiveCube</strong>, a low-code finance process automation product, reducing manual efforts around Close Management process by <strong>40%</strong>.
                 </li>
                 <li>
-                  Built a rule-based and AI-assisted system for transaction matching across bank, AR, and GL data, improving auto-reconciliation rates to <strong>80%</strong> and reducing manual effort by <strong>60%</strong>.
+                  Drove MVP definition and phased rollout strategy of LiveCube, validated product-market fit through pilot cohorts and iterative feedback loops, achieving <strong>30% pilot-to-paid client conversion</strong>.
                 </li>
                 <li>
-                  Developed shared platform capabilities (ERP integrations, orchestration, reusable objects), reducing duplicate development effort by <strong>25%</strong> and improving delivery timelines by <strong>20%</strong>.
+                  Conducted extensive market research and customer interviews, and partnered with Sales and Customer Success to prioritize product features, driving onboarding of <strong>first 25 customers, including 5 enterprise accounts</strong>, within 1 year of product launch.
                 </li>
                 <li>
-                  Increased feature adoption by <strong>20%</strong> by aligning sales and customer success on use-case qualification, onboarding journeys, and targeted engagement to drive consistent feature usage.
+                  Built a rule-based and AI-assisted financial reconciliation capability, reducing manual reconciliation efforts by <strong>60%</strong>.
+                </li>
+                <li>
+                  Partnered with platform and product teams to build shared service platform capabilities, reducing delivery timelines for consuming product teams by <strong>20%</strong>.
                 </li>
               </ul>
             </article>
@@ -173,19 +176,13 @@ export default function HomePage() {
               </p>
               <ul className="list-disc ml-6 space-y-2 text-sm md:text-base text-gray-700 dark:text-zinc-300">
                 <li>
-                  Delivered a fleet and tyre lifecycle management platform, improving visibility across inventory, inspection, and lifecycle performance.
+                  Delivered a fleet and tyre lifecycle management platform, improving operational visibility across inventory, inspection, and performance tracking for enterprise clients.
                 </li>
                 <li>
-                  Designed tyre condition tracking capabilities, improving data completeness by <strong>30%</strong> and enabling better maintenance decisions.
+                  Built an end-to-end tyre inspection system for fleets, reducing manual reporting effort and improving inspection turnaround time by <strong>40%</strong>.
                 </li>
                 <li>
-                  Built an end-to-end tyre inspection system, reducing manual reporting effort by <strong>50%</strong> and improving turnaround time.
-                </li>
-                <li>
-                  Introduced a tyre reuse capability, reducing wastage by <strong>10%</strong> and improving cost efficiency.
-                </li>
-                <li>
-                  Improved data quality by <strong>25%</strong> by integrating structured inspection and performance parameters.
+                  Introduced tyre reuse capabilities, reducing tyre wastage by <strong>10%</strong> and improving cost efficiency for commercial fleet customers.
                 </li>
               </ul>
             </article>
@@ -199,13 +196,13 @@ export default function HomePage() {
               </p>
               <ul className="list-disc ml-6 space-y-2 text-sm md:text-base text-gray-700 dark:text-zinc-300">
                 <li>
-                  Developed new credit card and forbearance workflows, improving client adoption by <strong>20%</strong>.
+                  Contributed to modernization of a credit card servicing platform through migration to microservice architecture, improving reliability, reducing response times, and supporting <strong>20% growth</strong> in digital customer adoption.
                 </li>
                 <li>
-                  Migrated legacy systems to microservices architecture, improving efficiency by <strong>30%</strong>.
+                  Implemented customer-facing credit card servicing features, including statement management and transaction history workflows, improving account visibility and self-serve experience.
                 </li>
                 <li>
-                  Automated unit testing systems, reducing testing time by <strong>25%</strong> and improving release quality.
+                  Optimized the delivery phase of the product life cycle by automating unit testing, which reduced testing time by <strong>25%</strong> and improved overall release quality.
                 </li>
               </ul>
             </article>
@@ -225,13 +222,14 @@ export default function HomePage() {
               <h3 className="text-lg font-semibold mb-3 text-center md:text-left">Product Management</h3>
               <div className="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start">
                 {[
-                  "User Research",
-                  "Market Research",
                   "Product Roadmapping",
-                  "Stakeholder Manager",
-                  "User Experience Optimization",
-                  "Agile",
-                  "UX Prototyping",
+                  "0→1 Product Development & Launch",
+                  "Market Research",
+                  "Customer Research",
+                  "Feature Prioritization",
+                  "Stakeholder Management",
+                  "Cross-functional Collaboration",
+                  "Agile (Scrum)",
                 ].map(skill => (
                   <span
                     key={skill}
@@ -243,9 +241,19 @@ export default function HomePage() {
               </div>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-3 text-center md:text-left">Tools</h3>
+              <h3 className="text-lg font-semibold mb-3 text-center md:text-left">Technical</h3>
               <div className="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start">
-                {["Jira", "Confluence", "Aha!", "Figma", "Miro", "Tableau"].map(skill => (
+                {[
+                  "SQL",
+                  "REST APIs",
+                  "JSON",
+                  "System Integrations",
+                  "Workflow Automation",
+                  "Generative AI",
+                  "LLMs",
+                  "RAG Systems",
+                  "Model Evaluation",
+                ].map(skill => (
                   <span
                     key={skill}
                     className="bg-indigo-50 dark:bg-zinc-800 px-4 py-2 rounded-full text-indigo-700 dark:text-indigo-300 font-medium text-sm"
@@ -256,15 +264,16 @@ export default function HomePage() {
               </div>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-3 text-center md:text-left">AI Tools &amp; Framework</h3>
+              <h3 className="text-lg font-semibold mb-3 text-center md:text-left">Tools &amp; AI</h3>
               <div className="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start">
                 {[
-                  "Claude Code",
+                  "Jira",
+                  "Confluence",
+                  "Figma",
+                  "Miro",
+                  "Pendo",
                   "Cursor",
-                  "Figma Make",
-                  "LLM",
-                  "Generative AI",
-                  "Agentic AI",
+                  "Claude Code",
                 ].map(skill => (
                   <span
                     key={skill}
@@ -319,10 +328,17 @@ export default function HomePage() {
           </p>
           <a
             href="mailto:rohittapader15@gmail.com"
-            className="inline-block text-blue-600 dark:text-blue-400 underline text-lg font-medium mb-4"
+            className="inline-block text-blue-600 dark:text-blue-400 underline text-lg font-medium"
           >
             rohittapader15@gmail.com
           </a>
+          <a
+            href="tel:+919007409058"
+            className="inline-block text-blue-600 dark:text-blue-400 underline text-lg font-medium mb-1"
+          >
+            +91 90074 09058
+          </a>
+          <p className="text-gray-500 dark:text-zinc-400 text-sm mb-4">Hyderabad, India</p>
           <div className="flex gap-7 items-center justify-center">
             <a
               href="https://www.linkedin.com/in/rohittapader/"

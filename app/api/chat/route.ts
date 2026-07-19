@@ -28,14 +28,18 @@ const blockedKeywords = [
 ];
 
 // Returns true when user text includes blocked/sensitive words.
+// Uses word boundaries so unrelated words aren't caught (e.g. "skills" contains "kill").
 function isUnsafeInput(input: string) {
   const lower = input.toLowerCase();
-  return blockedKeywords.some((word) => lower.includes(word));
+  return blockedKeywords.some((word) => new RegExp(`\\b${word}\\b`).test(lower));
 }
 
 // Restrict questions to the portfolio topic.
 function isRelevant(input: string) {
-  const keywords = ["rohit", "experience", "adp", "highradius", "mindtree", "skills", "product"];
+  const keywords = [
+    "rohit", "experience", "adp", "highradius", "livecube", "mindtree", "tcs",
+    "tata", "skills", "product", "education", "tools", "background", "resume",
+  ];
   const lower = input.toLowerCase();
   return keywords.some((word) => lower.includes(word));
 }
@@ -85,8 +89,8 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         model: "gpt-4o-mini",
 
-        // Cost-control settings: short and focused answers.
-        max_tokens: 120,
+        // Cost-control settings: focused answers with room for a short list when needed.
+        max_tokens: 220,
         temperature: 0.3,
 
         messages: [
@@ -98,8 +102,14 @@ STRICT RULES:
 - Answer ONLY based on the provided information below
 - DO NOT hallucinate or make up details
 - If unsure, say: "I don't have that information"
-- Keep answers concise (max 4-5 lines)
 - Focus on measurable impact
+
+FORMATTING RULES (the UI renders these, so follow them exactly):
+- If the answer has 2+ distinct points (achievements, skills, tools, roles), start with one short lead-in sentence, then list each point on its own line starting with "- ".
+- If the answer is a single point, write 1-3 short sentences with no list.
+- Wrap key metrics and names (e.g. **50%**, **LiveCube**) in double asterisks.
+- Do not use headers, numbered lists, or nested bullets. Keep each bullet to one line.
+- Keep the whole answer under ~80 words.
 
 SAFETY RULES:
 - Do NOT generate offensive, political, religious, or sensitive content
@@ -108,48 +118,39 @@ SAFETY RULES:
 
 CONTEXT (SOURCE OF TRUTH):
 
-Rohit Tapader is a Product Manager with 5+ years experience in B2B SaaS, automation, and AI-driven systems.
+Rohit Tapader is a Product Manager with 8.5+ years of experience building and scaling B2B enterprise SaaS and platform products in HCM, FinTech, and Manufacturing domains.
 
-ADP:
-- Built a scalable billing system integrating multiple data touchpoints, driving adoption to
-700+ existing & new clients in 1.5 years reducing manual billing effort by 50% and preventing
-$450K annual credits caused by incorrect billing.
+ADP Private Limited, Senior Product Manager - 1 (04/2024 - Present, Hyderabad):
+- Spearheaded development of a scalable, multi-source billing system, onboarding 700+ clients within 18 months, reducing manual billing effort by 50% and eliminating $450K in annual revenue leakage.
+- Led cross-functional discovery and workflow redesign with Engineering, UX, and Operations to automate manual touchpoints in Tax filing workflows, improving operational efficiency by 25%.
+- Built a standardized plug-and-play ERP integration framework for mid-market ERP clients, reducing integration setup time by 30% across multiple ERP systems.
+- Defined MVP and rollout strategy for an Agentic AI-driven service automation solution, automating 40% of Tier-1 support requests and demonstrating ~$400K-$600K annual savings potential based on pilot volumes (~12,000 tickets).
 
-- Redesigned Tax Filing workflows by automating manual Service & Operations touchpoints
-& introducing rule-based validation for jurisdiction-specific checks, improving efficiency by
-25%
+HighRadius Corporation, Associate Product Manager (05/2022 - 04/2024, Hyderabad):
+- Led 0→1 product launch of LiveCube, a low-code finance process automation product, reducing manual efforts around Close Management process by 40%.
+- Drove MVP definition and phased rollout strategy of LiveCube, validated product-market fit through pilot cohorts and iterative feedback loops, achieving 30% pilot-to-paid client conversion.
+- Conducted market research and customer interviews, partnered with Sales and Customer Success to prioritize features, driving onboarding of the first 25 customers, including 5 enterprise accounts, within 1 year of launch.
+- Built a rule-based and AI-assisted financial reconciliation capability, reducing manual reconciliation efforts by 60%.
+- Partnered with platform and product teams on shared service platform capabilities, reducing delivery timelines for consuming product teams by 20%.
 
-- Launched a plug and play solution to standardize integration format based on mid-market client feedback, reducing onboarding time by
-15% and improving integration adoption by 20%
+Mindtree Limited, Product Owner (06/2021 - 04/2022, Kolkata):
+- Delivered a fleet and tyre lifecycle management platform, improving operational visibility across inventory, inspection, and performance tracking for enterprise clients.
+- Built an end-to-end tyre inspection system for fleets, reducing manual reporting effort and improving inspection turnaround time by 40%.
+- Introduced tyre reuse capabilities, reducing tyre wastage by 10% and improving cost efficiency for commercial fleet customers.
 
--Led a POC for an Agentic AI-driven service automation solution, automating ~40% of Tier-1 support requests
-(e.g., invoice/ billing queries, account updates) via LLM + API orchestration; demonstrated
-~$400K to $600K annual savings potentialbased on pilot volumes (~12000 tickets)
+Tata Consultancy Services Limited, Software Engineer (10/2016 - 02/2020, Hyderabad):
+- Contributed to modernization of a credit card servicing platform through migration to microservice architecture, improving reliability, reducing response times, and supporting 20% growth in digital customer adoption.
+- Implemented customer-facing credit card servicing features, including statement management and transaction history workflows, improving account visibility and self-serve experience.
+- Optimized the delivery phase of the product life cycle by automating unit testing, reducing testing time by 25% and improving overall release quality.
 
-HighRadius:
-- Led 0→1 launch of a product, enabling automation of core product workflows, achieving ~30% pilot-to-paid conversion within 3 months and scaling from 15 to 85 paying customers over 18 months.
-- Built a rule-based and AI-assisted system for transaction matching across bank, AR, and GL data, improving auto-reconciliation rates to
-80% and reducing manual effort by 60%
+SKILLS:
+- Product Management: Product Roadmapping, 0→1 Product Development & Launch, Market Research, Customer Research, Feature Prioritization, Stakeholder Management, Cross-functional Collaboration, Agile (Scrum).
+- Technical: SQL, REST APIs, JSON, System Integrations, Workflow Automation, Generative AI, LLMs, RAG Systems, Model Evaluation.
+- Tools & AI: Jira, Confluence, Figma, Miro, Pendo, Cursor, Claude Code.
 
-- Developed shared platform capabilities (ERP integrations, orchestration, reusable objects), reducing duplicate development effort by 25% and improving delivery timelines by 20%
-- Increased feature adoption by 20% by aligning Sales and Customer Success on use-case qualification, onboarding journeys, and targeted engagement to drive consistent feature usage.
-
-Mindtree:
-- Delivered a fleet and tyre lifecycle management platform, improving visibility across inventory, inspection, and lifecycle performance.
-- Designed tyre condition tracking capabilities, improving data completeness by
-30% and enabling better maintenance decisions.
-- Built an end-to-end tyre inspection system, reducing manual reporting effort by
-50% and improving turnaround time
-- Introduced a tyre reuse capability, reducing wastage by
-10% and improving cost efficiency.
-- Improved data quality by 25% by integrating structured inspection and performance parameters
-
-TCS:
-- Developed new credit card and forbearance workflows, improving client adoption by
-20%
-- Migrated legacy systems to microservices architecture, improving efficiency by
-30%
-- Automated unit testing systems, reducing testing time by 25% and improving release quality.
+EDUCATION:
+- Post Graduate Program in Management, Great Lakes Institute of Management, Chennai (2020-2021), 3.24/4 - Distinction.
+- Bachelor of Technology, Heritage Institute of Technology, Kolkata (2012-2016), 8.17/10.
 
 Only use the above information.`,
           },

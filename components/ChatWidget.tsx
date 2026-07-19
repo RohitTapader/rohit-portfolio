@@ -15,6 +15,53 @@ const GREETING: ChatMessage = {
   content: `Hi there, my name is ${CHATBOT_NAME}. How can I help you?`,
 };
 
+// Renders "**bold**" segments within a single line as <strong>.
+function renderInline(text: string) {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
+    part.startsWith("**") && part.endsWith("**") ? (
+      <strong key={i}>{part.slice(2, -2)}</strong>
+    ) : (
+      <span key={i}>{part}</span>
+    )
+  );
+}
+
+// Turns Alfred's markdown-lite replies ("- " bullets, "**bold**") into
+// paragraphs and lists, so multi-point answers stay scannable on any screen.
+function MessageContent({ content }: { content: string }) {
+  const lines = content.split("\n").map((l) => l.trim()).filter(Boolean);
+  const blocks: { type: "list" | "para"; lines: string[] }[] = [];
+
+  for (const line of lines) {
+    const isListItem = /^[-•]\s+/.test(line);
+    const text = line.replace(/^[-•]\s+/, "");
+    const last = blocks[blocks.length - 1];
+    if (isListItem && last?.type === "list") {
+      last.lines.push(text);
+    } else if (isListItem) {
+      blocks.push({ type: "list", lines: [text] });
+    } else {
+      blocks.push({ type: "para", lines: [text] });
+    }
+  }
+
+  return (
+    <div className="space-y-1.5">
+      {blocks.map((block, i) =>
+        block.type === "list" ? (
+          <ul key={i} className="list-disc pl-4 space-y-1">
+            {block.lines.map((line, j) => (
+              <li key={j}>{renderInline(line)}</li>
+            ))}
+          </ul>
+        ) : (
+          <p key={i}>{renderInline(block.lines.join(" "))}</p>
+        )
+      )}
+    </div>
+  );
+}
+
 export default function ChatWidget() {
   // UI state: whether chat panel is open. Starts open so the greeting auto-pops on load.
   const [open, setOpen] = useState(true);
@@ -90,7 +137,7 @@ export default function ChatWidget() {
     <div className="fixed bottom-5 right-5 z-50">
       {open && (
         // Expanded chat panel container.
-        <div className="bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 shadow-2xl rounded-2xl w-80 p-4 border border-gray-200 dark:border-zinc-700 flex flex-col">
+        <div className="bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 shadow-2xl rounded-2xl w-[calc(100vw-2.5rem)] max-w-sm max-h-[80vh] p-4 border border-gray-200 dark:border-zinc-700 flex flex-col">
 
           {/* Header */}
           <div className="flex items-center justify-between mb-2">
@@ -106,7 +153,7 @@ export default function ChatWidget() {
           </div>
 
           {/* Chat Area */}
-          <div className="h-64 overflow-y-auto text-sm space-y-2">
+          <div className="flex-1 min-h-[16rem] overflow-y-auto text-sm space-y-2">
             {/* Show suggested prompts before the user sends their first message. */}
             {messages.length === 1 && (
               <div className="text-gray-500 dark:text-zinc-400 text-sm">
@@ -129,13 +176,17 @@ export default function ChatWidget() {
               <div
                 key={i}
                 // User messages align right, assistant aligns left.
-                className={`p-2 rounded-lg max-w-[80%] ${
+                className={`p-2 rounded-lg max-w-[85%] ${
                   m.role === "user"
                     ? "bg-black text-white dark:bg-zinc-100 dark:text-zinc-900 ml-auto"
                     : "bg-gray-100 text-black dark:bg-zinc-700 dark:text-zinc-100"
                 }`}
               >
-                {m.content}
+                {m.role === "assistant" ? (
+                  <MessageContent content={m.content} />
+                ) : (
+                  m.content
+                )}
               </div>
             ))}
 
