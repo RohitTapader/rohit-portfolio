@@ -1,7 +1,18 @@
 import { NextResponse } from "next/server";
 
+// Chatbot's name — kept in sync with components/ChatWidget.tsx.
+const CHATBOT_NAME = "Alfred";
+
 // Keep messages short to control API cost and abuse.
 const MAX_INPUT_LENGTH = 300;
+
+// Cap how much prior conversation we forward, to bound token cost per request.
+const MAX_HISTORY_MESSAGES = 10;
+
+type ChatMessage = {
+  role: "user" | "assistant";
+  content: string;
+};
 
 // Basic keyword filter (can expand later).
 const blockedKeywords = [
@@ -32,8 +43,9 @@ function isRelevant(input: string) {
 // Handles POST /api/chat from ChatWidget.tsx.
 export async function POST(req: Request) {
   try {
-    // Read user message from the request body.
-    const { message } = await req.json();
+    // Read user message and prior conversation (session memory) from the request body.
+    const { message, history } = await req.json();
+    const priorMessages: ChatMessage[] = Array.isArray(history) ? history : [];
 
     // 1) Input length control (cost + stability).
     if (!message || message.length > MAX_INPUT_LENGTH) {
@@ -49,12 +61,19 @@ export async function POST(req: Request) {
       });
     }
 
-    // 3) Reject off-topic questions.
-    if (!isRelevant(message)) {
+    // 3) Reject off-topic questions. Once a conversation is already underway, allow
+    // natural follow-ups (e.g. "and how much did that save?") even without a keyword hit.
+    if (priorMessages.length === 0 && !isRelevant(message)) {
       return NextResponse.json({
         reply: "I can only answer questions related to Rohit's experience, skills, and work.",
       });
     }
+
+    // Only forward the most recent turns to bound token cost, and only real
+    // conversation turns (skip Alfred's canned greeting, which carries no info).
+    const recentHistory = priorMessages
+      .filter((m) => m.role === "user" || m.role === "assistant")
+      .slice(-MAX_HISTORY_MESSAGES);
 
     // Server-side call to OpenAI; API key stays hidden in .env.local.
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -73,7 +92,7 @@ export async function POST(req: Request) {
         messages: [
           {
             role: "system",
-            content: `You are an AI assistant representing Rohit Tapader.
+            content: `You are ${CHATBOT_NAME}, an AI assistant representing Rohit Tapader.
 
 STRICT RULES:
 - Answer ONLY based on the provided information below
@@ -134,6 +153,8 @@ TCS:
 
 Only use the above information.`,
           },
+          // Prior turns give the model session/conversation memory for this chat.
+          ...recentHistory,
           {
             role: "user",
             content: message,
