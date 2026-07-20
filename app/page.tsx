@@ -324,7 +324,7 @@ export default function HomePage() {
                 Built a resume-based website with an AI chatbot that answers recruiter questions instantly, combining LLM integration with a portfolio-first experience to accelerate hiring decisions.
               </p>
               <a
-                href="https://github.com/RohitTapader"
+                href="https://github.com/RohitTapader/rohit-portfolio"
                 className="text-blue-600 dark:text-blue-400 underline hover:font-semibold"
                 target="_blank"
                 rel="noopener noreferrer"
