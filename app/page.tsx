@@ -300,6 +300,24 @@ export default function HomePage() {
               <h3 className="font-bold text-lg flex items-center gap-2 text-blue-700 dark:text-blue-400">
                 <svg className="h-6 w-6 inline-block" fill="none" stroke="currentColor" strokeWidth={2}
                   viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m4-4h.01M12 2a10 10 0 11-7.07 2.93A10 10 0 0112 2z" /></svg>
+                Signai OS - AI Decision Intelligence Platform for Product Managers
+              </h3>
+              <p className="text-gray-700 dark:text-zinc-300 text-sm mt-1 mb-2">
+                Designed and built an AI-powered decision intelligence platform that continuously ingests trusted AI ecosystem signals, detects novel developments, ranks their business and product impact, and delivers evidence backed executive briefings for Product managers.
+              </p>
+              <a
+                href="https://github.com/RohitTapader/signal-os"
+                className="text-blue-600 dark:text-blue-400 underline hover:font-semibold"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Code
+              </a>
+            </div>
+            <div className="bg-white dark:bg-zinc-800 rounded-lg shadow p-6 transition hover:scale-105 hover:shadow-xl">
+              <h3 className="font-bold text-lg flex items-center gap-2 text-blue-700 dark:text-blue-400">
+                <svg className="h-6 w-6 inline-block" fill="none" stroke="currentColor" strokeWidth={2}
+                  viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m4-4h.01M12 2a10 10 0 11-7.07 2.93A10 10 0 0112 2z" /></svg>
                 AI Resume Assistant
               </h3>
               <p className="text-gray-700 dark:text-zinc-300 text-sm mt-1 mb-2">
